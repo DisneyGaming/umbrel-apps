@@ -1,0 +1,21 @@
+manifestVersion: 1
+id: zurg-testing
+category: media
+name: Zurg - Real-Debrid Bridge
+version: "1.0"
+tagline: debrid, real-debrid, media
+description: >-
+  Real-Debrid Zurg, innit
+releaseNotes: >-
+  Zurg Moment
+developer: Gabe Newell
+website: https://github.com/debridmediamanager/zurg-testing
+
+repo: https://github.com/debridmediamanager/zurg-testing
+support: https://github.com/debridmediamanager/zurg-testing
+port: 9999
+path: ""
+defaultUsername: ""
+defaultPassword: ""
+submitter: Glorp
+submission: https://github.com/getumbrel/umbrel/pull/334
