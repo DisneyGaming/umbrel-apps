@@ -10,10 +10,15 @@ releaseNotes: >-
   Zurg Moment
 developer: Gabe Newell
 website: https://github.com/debridmediamanager/zurg-testing
-
+dependencies: []
 repo: https://github.com/debridmediamanager/zurg-testing
 support: https://github.com/debridmediamanager/zurg-testing
 port: 9999
+gallery:
+  - 1.jpg
+  - 2.jpg
+  - 3.jpg
+  - 4.jpg
 path: ""
 defaultUsername: ""
 defaultPassword: ""
