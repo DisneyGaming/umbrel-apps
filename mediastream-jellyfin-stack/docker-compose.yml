@@ -1,0 +1,82 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: mediastream-jellyfin-stack_jellyfin_1
+      APP_PORT: 8096
+
+  zurg:
+    image: ghcr.io/debridmediamanager/zurg-testing:latest
+    container_name: zurg
+    restart: unless-stopped
+    ports:
+      - "9999:9999"
+    volumes:
+      - ${APP_DATA_DIR}/config/config.yml:/app/config/config.yml
+      - ${APP_DATA_DIR}/zurg/data:/app/data
+      - ${APP_DATA_DIR}/zurg/log:/app/log
+      - ${APP_DATA_DIR}/zurg/RD:/app/RD
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+
+  rclone:
+    image: rclone/rclone:latest
+    container_name: rclone
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - ${APP_DATA_DIR}/config/rclone.conf:/config/rclone/rclone.conf
+      - ${APP_DATA_DIR}/rclone/logs:/logs
+      - ${APP_DATA_DIR}/rclone/cache:/cache
+      - ${APP_DATA_DIR}/media:/data:shared
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    devices:
+      - /dev/fuse:/dev/fuse:rwm
+    command: >
+      mount zurg: /data
+      --allow-other
+      --allow-non-empty
+      --dir-cache-time 10s
+      --vfs-cache-mode full
+      --vfs-cache-max-size 100G
+      --cache-dir /cache
+      --log-level INFO
+      --log-file /logs/rclone.log
+    depends_on:
+      - zurg
+
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    ports:
+      - "8096:8096"
+      - "8920:8920"
+      - "7359:7359/udp"
+      - "1900:1900/udp"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      - JELLYFIN_PublishedServerUrl=http://${DEVICE_HOSTNAME}.local:8096
+    volumes:
+      - ${APP_DATA_DIR}/jellyfin/config:/config
+      - ${APP_DATA_DIR}/jellyfin/cache:/cache
+      - ${APP_DATA_DIR}/media:/media:ro
+    devices:
+      # Intel Quick Sync
+      - /dev/dri/renderD128:/dev/dri/renderD128
+      - /dev/dri/card0:/dev/dri/card0
+    group_add:
+      - "109"  # Render group for hardware acceleration
+    depends_on:
+      - rclone

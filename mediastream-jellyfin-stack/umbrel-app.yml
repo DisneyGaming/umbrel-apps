@@ -1,0 +1,39 @@
+manifestVersion: 1.1
+id: mediastream-jellyfin-stack
+category: media
+name: Jellyfin Media Stack
+version: "1.0.0"
+tagline: Complete media streaming solution with Zurg, RClone, and Jellyfin
+description: >-
+  A powerful media streaming stack that combines Zurg for debrid service management,
+  RClone for cloud storage mounting, and Jellyfin for a beautiful media server experience.
+  
+  This stack provides:
+  
+  - Zurg: Efficient debrid service integration for Real-Debrid
+  
+  - RClone: Cloud storage mounting with advanced caching for smooth playback
+  
+  - Jellyfin: Feature-rich media server with hardware acceleration support
+  
+  
+  Features include hardware transcoding support (Intel Quick Sync, NVIDIA, AMD),
+  automatic library management, and seamless integration between all components.
+  
+  Perfect for streaming your media collection from debrid services with
+  minimal configuration.
+
+releaseNotes: ""
+
+developer: MediaStream Community
+website: https://jellyfin.org
+dependencies: []
+repo: https://github.com/debridmediamanager/zurg-testing
+support: https://github.com/debridmediamanager/zurg-testing/discussions
+port: 8096
+gallery: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""
+submitter: MediaStream
+submission: ""

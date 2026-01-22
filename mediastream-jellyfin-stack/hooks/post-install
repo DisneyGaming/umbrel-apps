@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e
+
+# Create config directory if it doesn't exist
+mkdir -p "${APP_DATA_DIR}/config"
+
+# Copy template config files if they don't already exist
+if [ ! -f "${APP_DATA_DIR}/config/config.yml" ]; then
+    echo "Copying Zurg config template..."
+    cp "${UMBREL_ROOT}/app-data/${APP_ID}/config.yml" "${APP_DATA_DIR}/config/config.yml"
+    echo "⚠️  Please edit ${APP_DATA_DIR}/config/config.yml and add your Real-Debrid API token!"
+fi
+
+if [ ! -f "${APP_DATA_DIR}/config/rclone.conf" ]; then
+    echo "Copying RClone config template..."
+    cp "${UMBREL_ROOT}/app-data/${APP_ID}/rclone.conf" "${APP_DATA_DIR}/config/rclone.conf"
+fi
+
+echo "✅ Configuration files ready in ${APP_DATA_DIR}/config/"
+echo "📝 Remember to edit config.yml with your Real-Debrid token before starting!"
