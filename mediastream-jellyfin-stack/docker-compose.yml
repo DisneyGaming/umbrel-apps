@@ -34,7 +34,11 @@ services:
       - ${APP_DATA_DIR}/config/rclone.conf:/config/rclone/rclone.conf
       - ${APP_DATA_DIR}/rclone/logs:/logs
       - ${APP_DATA_DIR}/rclone/cache:/cache
-      - ${APP_DATA_DIR}/media:/data:shared
+      - type: bind
+        source: ${APP_DATA_DIR}/media
+        target: /data
+        bind:
+          propagation: rshared
     cap_add:
       - SYS_ADMIN
     security_opt:
