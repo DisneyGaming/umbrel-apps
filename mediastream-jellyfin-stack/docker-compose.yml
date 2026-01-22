@@ -35,7 +35,6 @@ services:
       - ${APP_DATA_DIR}/config/rclone.conf:/config/rclone/rclone.conf
       - ${APP_DATA_DIR}/rclone/logs:/logs
       - ${APP_DATA_DIR}/rclone/cache:/cache
-      - ${APP_DATA_DIR}/media:/data:rshared
     command: >
       mount zurg: /data
       --allow-other
@@ -66,7 +65,8 @@ services:
     volumes:
       - ${APP_DATA_DIR}/jellyfin/config:/config
       - ${APP_DATA_DIR}/jellyfin/cache:/cache
-      - ${APP_DATA_DIR}/media:/media:ro
+    volumes_from:
+      - rclone:ro
     devices:
       # Intel Quick Sync
       - /dev/dri/renderD128:/dev/dri/renderD128
